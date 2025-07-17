@@ -23,15 +23,56 @@
     transform: rotateY(180deg) rotate(20deg) translateY(-20px);
    }
 }
+@keyframes float3 {
+  0%, 100% {
+    transform: rotate(-15deg) translateY(0);
+  } 50% {
+    transform: rotate(-20deg) translateY(-20px);
+  }
+}
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+@keyframes jump {
+  0%, 100% {
+    transform: translateY(0);
+    visibility: visible;
+  } 50% {
+    transform: translateY(-50px);
+    visibility: visible;
+  } 100% {
+    transform: translateY(0);
+    visibility: visible;
   }
-  
-  @keyframes fadeOut {
+}
+@keyframes draw {
+  to { 
+    stroke-dashoffset: 0;
+  }
+} 
+@keyframes fill {
+  to {
+    fill: #000000;
+    stroke-width: 0.1;
+  }
+}
+@keyframes fadeOut {
     from { opacity: 1; }
     to { opacity: 0; }
+}
+@keyframes scrollDown { 
+  0% {
+    transform: translate(-50%, 20px);
+    opacity: 1;
+  } 80% {
+    transform: translate(-50%, 0);
+    opacity: 0;
+  } 100% {
+    transform: translate(-50%, 20px);
+    opacity: 0;
   }
+}
 .autoShow {
     animation: autoShowAnimation both;
     animation-timeline: view(70% 5%);
@@ -353,7 +394,7 @@ span {
 
 .float {
     position: absolute;
-    top: 200px;
+    margin-top: -100px;
     right: 40px;
     width: 400px;
     filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
@@ -362,14 +403,22 @@ span {
 }
 .float2 {
     position: absolute;
-    top: 840px;
+    top: 700px;
     left: 40px;
     width: 200px;
     filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
     animation: float2 6s ease-in-out infinite;
     z-index: 0;
 }
-
+.float3 {
+  position: absolute;
+  margin-top: -850px;
+  right: 40px;
+  width: 400px;
+  filter: drop-shadow(0 0 10px rgba(0, 0, 0, 0.2));
+  animation: float3 6s ease-in-out infinite;
+  z-index: 1;
+}
  #main {
     margin-top: 75px;
     padding: 50px 0;
@@ -827,5 +876,106 @@ span {
         transform: scale(1.5);
         transition: all 0.3s ease;
       }
+
+      section {
+        top: -100px;
+        position: relative;
+        width: 100%;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      }
       
-    
+      .intro-section {
+        background-color: aliceblue;
+      }
+
+      .container-intro {
+        text-align: center;
+        position: relative;
+      }
+
+      svg { 
+        max-width: 600px;
+        width: 100%;
+      }
+
+      .step {
+        fill: #000000;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      }
+
+      .title-text {
+        font-size: 4rem;
+        font-weight: bold;
+        fill: transparent;
+        stroke: #ffffff;
+        stroke-width: 3;
+        stroke-dasharray: 500;
+        stroke-dashoffset: 500;
+        animation: draw 10s forwards, fill 1s 1.5s forwards;
+      }
+
+      .up {
+        fill: rgb(50, 123, 206);
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      }
+
+      .step-dot {
+        fill: #000000;
+        visibility: hidden;
+        animation: jump 1s ease;
+        animation-delay: 2.5s;
+        font-size: 5rem;
+        transform-origin: center center;
+        transform-box: fill-box;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
+      }
+
+      .subtitle {
+        opacity: 0;
+        font-size: 1.5rem;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        color: #475569;
+        margin-top: 1rem;
+        animation: fadeIn 1s 2.5s forwards;
+      }
+
+      .scroll-indicator {
+        position: absolute;
+        bottom: 100px;
+        width: 30px;
+        height: 50px;
+        border: 2px solid #3b82f6;
+        border-radius: 15px;
+        opacity: 0;
+        animation: fadeIn 1s 3s forwards;
+      }
+
+      .scroll-indicator::before {
+        content: '';
+        position: absolute;
+        top: 8px;
+        left: 50%;
+        width: 8px;
+        height: 8px;
+        background: #3b82f6;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        animation: scrollDown 2s infinite;
+      }
+
+      .scroll-text {
+        position: absolute;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        bottom: 75px;
+        font-size: 1rem;
+        color: #475569;
+        opacity: 0;
+        animation: fadeIn 1s 3s forwards;
+      }
+
